@@ -1,26 +1,30 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { fetchUsers } from "@/services/requests";
 import UserCard from "@/components/UserCard";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<any[]>([]);
 
   useEffect(() => {
-    axios
-      .get("https://randomuser.me/api/?results=10")
-      .then((response) => {
-        setUsers(response.data.results);
-      })
-      .catch((error) => console.error(error));
+    const getUsers = async () => {
+      try {
+        const fetchedUsers = await fetchUsers();
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error("Error setting users:", error);
+      }
+    };
+
+    getUsers();
   }, []);
 
   return (
     <div style={{ padding: "16px" }}>
       <h1>User Library App</h1>
       {users.map((user) => (
-        <UserCard user={user} />
+        <UserCard key={user.login.uuid} user={user} />
       ))}
     </div>
   );
