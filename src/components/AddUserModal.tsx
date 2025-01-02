@@ -43,8 +43,8 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
     if (nameParts.length === 2) {
       setNewUser((prevUser) => ({
         ...prevUser,
-        [nameParts[0]]: {
-          ...(prevUser ?? [nameParts[0]]),
+        [nameParts[0] as keyof User]: {
+          ...(prevUser[nameParts[0] as keyof User] as Record<string, any>),
           [nameParts[1]]: value,
         },
       }));
