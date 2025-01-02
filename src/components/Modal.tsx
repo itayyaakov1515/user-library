@@ -11,7 +11,6 @@ interface ConfirmationModalProps {
 
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   action,
-  text,
   onConfirm,
   onCancel,
 }) => {
