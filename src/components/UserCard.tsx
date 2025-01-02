@@ -4,27 +4,28 @@ import { User } from "@/types/User";
 import "../app/css/UserCard.css"; // Import the CSS file
 import "font-awesome/css/font-awesome.min.css";
 import ConfirmationModal from "./Modal";
+import Image from "next/image";
 
 interface UserCardProps {
   user: User;
   onEdit: () => void;
-  onDelete: (user: User) => void; 
+  onDelete: (user: User) => void;
 }
 
 const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleDeleteClick = () => {
-    setIsModalVisible(true); 
+    setIsModalVisible(true);
   };
 
   const handleConfirmDelete = () => {
-    onDelete(user); 
-    setIsModalVisible(false); 
+    onDelete(user);
+    setIsModalVisible(false);
   };
 
   const handleCancelDelete = () => {
-    setIsModalVisible(false); 
+    setIsModalVisible(false);
   };
 
   return (
@@ -37,10 +38,12 @@ const UserCard: React.FC<UserCardProps> = ({ user, onEdit, onDelete }) => {
         />
         <p className="user-id">ID: {user.login.uuid}</p>
         <div className="user-image-container">
-          <img
+          <Image
             src={user.picture.medium}
             alt={`${user.name.first} ${user.name.last}`}
             className="user-image"
+            width={100} // Provide an appropriate width
+            height={100} // Provide an appropriate height
           />
         </div>
       </div>
