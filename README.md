@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Appsforce - Users Library App
 
-## Getting Started
+This is a **Users Library** application built using **React**, **TypeScript**, and **Next.js**. The app fetches user data from the [Random User API](https://randomuser.me/api/?results=10) and provides functionalities to view, edit, and manage users.
 
-First, run the development server:
+### Features:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Display Users**: The app fetches and displays a list of 10 users with details like name, email, location, and profile image.
+- **Edit Users**: Users can be edited locally. Fields that can be edited include:
+  - **Name** (First and Last)
+  - **Email**
+  - **Location** (City and Country)
+- **Add New User**: A button is provided to add new users through a form.
+- **Delete User**: Users can be deleted with a confirmation message.
+- **Validation**: Each input field is validated before saving:
+  - All fields are required.
+  - Name should be at least 3 characters long.
+  - Email should be a valid email address and unique.
+- **Responsive Design**: The app is responsive and optimized for both desktop and mobile devices.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Technologies Used:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **React** (with TypeScript)
+- **Next.js**
+- **Styled Components / SCSS Modules**
+- **React Query** (for data fetching and state management)
+- **Modal for Editing**: Used to edit user data with Save/Cancel options.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## How to Install and Run:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**:
+   First, clone this repository to your local machine using the following command:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   git clone <repository-url>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```
 
-## Deploy on Vercel
+2. Navigate to the project directory: Once the repository is cloned, navigate into the project directory:
+   cd <project-directory>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Install dependencies: Run the following command to install the required dependencies:
+   npm install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Run the development server: Once the dependencies are installed, you can start the development server with:
+   npm run dev
+
+5. Open the app in your browser: After the server starts, open your browser and go to:
+   http://localhost:3000
