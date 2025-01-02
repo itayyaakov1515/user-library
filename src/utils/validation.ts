@@ -1,6 +1,10 @@
 import { User } from "@/types/User";
 
-export const validateUser = (user: User, existingUsers: User[]) => {
+export const validateUser = (
+  user: User,
+  existingUsers: User[],
+  prev?: User
+) => {
   const errors: any = {};
 
   if (!user.name?.first || user.name.first.trim().length === 0) {
@@ -29,7 +33,7 @@ export const validateUser = (user: User, existingUsers: User[]) => {
     const isEmailTaken = existingUsers.some(
       (existingUser) => existingUser.email === user.email
     );
-    if (isEmailTaken) {
+    if (isEmailTaken && prev?.email !== user.email) {
       errors.email = "Email is already taken.";
     }
   }

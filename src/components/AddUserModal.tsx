@@ -3,6 +3,7 @@ import { validateUser } from "@/utils/validation"; // Import the validation func
 import { User } from "@/types/User";
 import Button from "./Button";
 import "../app/css/Form.css";
+import Image from "next/image";
 
 interface AddUserModalProps {
   onClose: () => void;
@@ -17,7 +18,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
 }) => {
   const [newUser, setNewUser] = useState<User>({
     login: { uuid: "" },
-    name: { first: "", last: "" },
+    name: { title: "", first: "", last: "" },
     email: "",
     location: { city: "", country: "" },
     picture: { medium: "" },
@@ -42,8 +43,8 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
     if (nameParts.length === 2) {
       setNewUser((prevUser) => ({
         ...prevUser,
-        [nameParts[0]]: {
-          ...prevUser[nameParts[0]],
+        [nameParts[0] as keyof User]: {
+          ...(prevUser[nameParts[0] as keyof User] as Record<string, any>),
           [nameParts[1]]: value,
         },
       }));
@@ -173,7 +174,7 @@ const AddUserModal: React.FC<AddUserModalProps> = ({
             </label>
             {imagePreview && (
               <div className="image-preview">
-                <img
+                <Image
                   src={imagePreview}
                   alt="Profile Preview"
                   className="preview-image"

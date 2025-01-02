@@ -47,7 +47,10 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
   };
 
   const handleSave = () => {
-    const validationErrors = validateUser(editedUser, users);
+    console.log("Edited user email:", editedUser.email);
+    console.log("Previous user email:", user.email);
+    console.log(errors, "errors");
+    const validationErrors = validateUser(editedUser, users, user); // Pass 'user' as prevUser
     if (Object.keys(validationErrors).length === 0) {
       setActionType("save");
       setShowConfirmation(true);
