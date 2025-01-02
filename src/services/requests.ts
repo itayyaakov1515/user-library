@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchUsers = async (count: number = 10) => {
+export const fetchUsers = async (count: number = 15) => {
   try {
     const response = await axios.get(
       `https://randomuser.me/api/?results=${count}`
