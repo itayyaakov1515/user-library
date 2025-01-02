@@ -1,0 +1,32 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.content-container {
+  width: 100%;
+  max-width: 1200px;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.user-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.user-card-container {
+  flex: 1 1 30%;
+  max-width: 30%;
+}
