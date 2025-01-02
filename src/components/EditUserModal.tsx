@@ -9,12 +9,14 @@ interface EditUserModalProps {
   user: User;
   onClose: () => void;
   onSave: (updatedUser: User) => void;
+  users: User[];
 }
 
 const EditUserModal: React.FC<EditUserModalProps> = ({
   user,
   onClose,
   onSave,
+  users,
 }) => {
   const [editedUser, setEditedUser] = useState(user);
   const [errors, setErrors] = useState<any>({});
@@ -45,7 +47,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
   };
 
   const handleSave = () => {
-    const validationErrors = validateUser(editedUser);
+    const validationErrors = validateUser(editedUser, users);
     if (Object.keys(validationErrors).length === 0) {
       setActionType("save");
       setShowConfirmation(true);

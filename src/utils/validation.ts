@@ -1,6 +1,6 @@
 import { User } from "@/types/User";
 
-export const validateUser = (user: User) => {
+export const validateUser = (user: User, existingUsers: User[]) => {
   const errors: any = {};
 
   if (!user.name?.first || user.name.first.trim().length === 0) {
@@ -25,6 +25,13 @@ export const validateUser = (user: User) => {
     errors.email = "Email is required.";
   } else if (!/^\S+@\S+\.\S+$/.test(user.email)) {
     errors.email = "Email must be a valid email address.";
+  } else {
+    const isEmailTaken = existingUsers.some(
+      (existingUser) => existingUser.email === user.email
+    );
+    if (isEmailTaken) {
+      errors.email = "Email is already taken.";
+    }
   }
 
   if (!user.location?.city || user.location.city.trim().length === 0) {

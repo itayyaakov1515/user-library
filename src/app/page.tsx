@@ -79,6 +79,7 @@ const Home = () => {
             user={selectedUser}
             onClose={handleCloseModal}
             onSave={handleSave}
+            users={users}
           />
         )}
 
@@ -86,6 +87,7 @@ const Home = () => {
           <AddUserModal
             onClose={() => setShowAddUserModal(false)}
             onSave={handleAddUser}
+            users={users}
           />
         )}
       </div>

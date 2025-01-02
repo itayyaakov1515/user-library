@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { validateUser } from "@/utils/validation"; // Import the validation function
 import { User } from "@/types/User";
 import Button from "./Button";
 import "../app/css/Form.css";
@@ -6,9 +7,14 @@ import "../app/css/Form.css";
 interface AddUserModalProps {
   onClose: () => void;
   onSave: (newUser: User) => void;
+  users: User[];
 }
 
-const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSave }) => {
+const AddUserModal: React.FC<AddUserModalProps> = ({
+  onClose,
+  onSave,
+  users,
+}) => {
   const [newUser, setNewUser] = useState<User>({
     login: { uuid: "" },
     name: { first: "", last: "" },
@@ -28,35 +34,6 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSave }) => {
       }));
     }
   }, [imagePreview]);
-
-  const validate = () => {
-    const newErrors: any = {};
-
-    if (!newUser.name.first) {
-      newErrors.name = { ...newErrors.name, first: "First name is required" };
-    }
-    if (!newUser.name.last) {
-      newErrors.name = { ...newErrors.name, last: "Last name is required" };
-    }
-    if (!newUser.email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(newUser.email)) {
-      newErrors.email = "Email is not valid";
-    }
-    if (!newUser.location.city) {
-      newErrors.location = { ...newErrors.location, city: "City is required" };
-    }
-    if (!newUser.location.country) {
-      newErrors.location = {
-        ...newErrors.location,
-        country: "Country is required",
-      };
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -85,14 +62,18 @@ const AddUserModal: React.FC<AddUserModalProps> = ({ onClose, onSave }) => {
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
       };
-      reader.readAsDataURL(file); 
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSave = () => {
-    if (validate()) {
+    console.log(newUser); // Check the state of newUser
+    const validationErrors = validateUser(newUser, users);
+    if (Object.keys(validationErrors).length === 0) {
       onSave(newUser);
-      onClose(); 
+      onClose();
+    } else {
+      setErrors(validationErrors);
     }
   };
 
