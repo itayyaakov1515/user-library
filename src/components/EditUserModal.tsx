@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { validateUser } from "@/utils/validation";
 import { User } from "@/types/User";
-import "../app/css/EditUser.css";
+import "../app/css/Form.css";
 import Button from "./Button";
+import ConfirmationModal from "./Modal";
 
 interface EditUserModalProps {
   user: User;
@@ -17,6 +18,8 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
 }) => {
   const [editedUser, setEditedUser] = useState(user);
   const [errors, setErrors] = useState<any>({});
+  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
+  const [actionType, setActionType] = useState<"save" | "cancel" | null>(null);
 
   useEffect(() => {
     setEditedUser(user);
@@ -24,15 +27,15 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const keys = name.split("."); 
+    const keys = name.split(".");
 
     setEditedUser((prevUser) => {
-      const updatedUser = { ...prevUser }; 
+      const updatedUser = { ...prevUser };
 
-      let current: any = updatedUser; 
+      let current: any = updatedUser;
 
       for (let i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]]) current[keys[i]] = {}; 
+        if (!current[keys[i]]) current[keys[i]] = {};
         current = current[keys[i]];
       }
       current[keys[keys.length - 1]] = value;
@@ -43,23 +46,35 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
 
   const handleSave = () => {
     const validationErrors = validateUser(editedUser);
-    console.log(validationErrors); 
     if (Object.keys(validationErrors).length === 0) {
-      onSave(editedUser);
-      onClose();
+      setActionType("save");
+      setShowConfirmation(true);
     } else {
-      setErrors(validationErrors); 
-      console.log("Errors set:", validationErrors); 
+      setErrors(validationErrors);
     }
   };
 
-  console.log("EditUserModal errors:", errors);
+  const handleCancel = () => {
+    onClose();
+  };
+
+  const handleConfirmAction = () => {
+    if (actionType === "save") {
+      onSave(editedUser);
+    }
+    onClose();
+    setShowConfirmation(false);
+  };
+
+  const handleCancelAction = () => {
+    setShowConfirmation(false);
+  };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <h2 className="modal-title">Edit User</h2>
-        <form className="form">
+    <div>
+      <div className="modal">
+        <div className="modal-content">
+          <h2 className="modal-title">Edit User</h2>
           <div className="input-group">
             <label className="label">
               First Name:
@@ -137,10 +152,24 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
               <div className="error">{errors.location.country}</div>
             )}
           </div>
-          <Button text="Save" onClick={handleSave} color="green" size="small" />
-          <Button text="Cancel" onClick={onClose} color="red" size="small" />
-        </form>
+
+          <Button text="Edit" onClick={handleSave} color="green" size="small" />
+          <Button
+            text="Cancel"
+            onClick={handleCancel}
+            color="red"
+            size="small"
+          />
+        </div>
       </div>
+
+      {showConfirmation && (
+        <ConfirmationModal
+          action={"edit the user"}
+          onConfirm={handleConfirmAction}
+          onCancel={handleCancelAction}
+        />
+      )}
     </div>
   );
 };

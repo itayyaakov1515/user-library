@@ -8,6 +8,7 @@ const Button: React.FC<ButtonProps> = ({
   size = "medium",
   disabled = false,
   type = "button",
+  width,
 }) => {
   const buttonStyle: React.CSSProperties = {
     backgroundColor: color,
@@ -23,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
     cursor: disabled ? "not-allowed" : "pointer",
     opacity: disabled ? 0.6 : 1,
     fontSize: size === "large" ? "16px" : size === "small" ? "12px" : "14px",
+    width: width, 
   };
 
   return (

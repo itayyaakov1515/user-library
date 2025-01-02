@@ -1,10 +1,10 @@
 import React from "react";
-import "../app/css/Modal.css"; 
+import "../app/css/Modal.css";
 import Button from "./Button";
 
 interface ConfirmationModalProps {
   action: string;
-  text: string;
+  text?: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -19,7 +19,6 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     <div className="confirmation-modal">
       <div className="modal-content">
         <h2>{`Are you sure you want to ${action}?`}</h2>
-        <p>{text}</p>
         <Button
           text="Confirm"
           onClick={onConfirm}

@@ -5,4 +5,5 @@ export interface ButtonProps {
   size?: "small" | "medium" | "large";
   disabled?: boolean;
   type?: "button" | "submit";
+  width?: string;
 }
